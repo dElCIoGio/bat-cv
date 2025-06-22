@@ -6,7 +6,8 @@ import { ChevronLeft, ChevronRight, Settings } from "lucide-react"
 
 
 
-import {useSearchParams} from "react-router";
+import { useNavigate } from "react-router";
+import { mockCVApi } from "@/api/routes/cv/mock.ts";
 import ModernTemplate from "@/components/pages/editor/modern-template.tsx";
 import ClassicTemplate from "@/components/pages/editor/classic-template.tsx";
 import CreativeTemplate from "@/components/pages/editor/creative-template.tsx";
@@ -31,7 +32,7 @@ const templates = {
 }
 
 export default function CVEditor() {
-    const [searchParams, ] = useSearchParams()
+    const navigate = useNavigate()
     const [formData, setFormData] = useState<FormProps | null>(null)
     const [selectedTemplate, setSelectedTemplate] = useState<string>("")
     const [showTemplateDialog, setShowTemplateDialog] = useState(true)
@@ -40,16 +41,21 @@ export default function CVEditor() {
     const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
-        const dataParam = searchParams.get("data")
-        if (dataParam) {
-            try {
-                const parsedData = JSON.parse(decodeURIComponent(dataParam))
-                setFormData(parsedData)
-            } catch (error) {
-                console.error("Error parsing form data:", error)
+        async function fetchData() {
+            const key = localStorage.getItem("cv_edit_key")
+            if (!key) {
+                navigate("/cv")
+                return
+            }
+            const data = await mockCVApi.getCVData(key)
+            if (data) {
+                setFormData(data)
+            } else {
+                navigate("/cv")
             }
         }
-    }, [searchParams])
+        fetchData()
+    }, [navigate])
 
     const handleTemplateSelect = (template: string) => {
         setSelectedTemplate(template)
