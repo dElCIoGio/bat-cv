@@ -1,0 +1,24 @@
+/cv-quick-frontend/node_modules
+# Logs
+/cv-quick-frontend/logs
+/cv-quick-frontend/*.log
+/cv-quick-frontend/npm-debug.log*
+/cv-quick-frontend/yarn-debug.log*
+/cv-quick-frontend/yarn-error.log*
+/cv-quick-frontend/pnpm-debug.log*
+/cv-quick-frontend/lerna-debug.log*
+
+/cv-quick-frontend/dist
+/cv-quick-frontend/dist-ssr
+/cv-quick-frontend/*.local
+
+# Editor directories and files
+/cv-quick-frontend/.vscode/*
+/cv-quick-frontend/!.vscode/extensions.json
+/cv-quick-frontend/.idea
+/cv-quick-frontend/.DS_Store
+/cv-quick-frontend/*.suo
+/cv-quick-frontend/*.ntvs*
+/cv-quick-frontend/*.njsproj
+/cv-quick-frontend/*.sln
+/cv-quick-frontend/*.sw?
