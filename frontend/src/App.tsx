@@ -7,6 +7,7 @@ import SignUpPage from "@/pages/auth/sign-up.tsx";
 import ResetPasswordPage from "@/pages/auth/reset-password.tsx";
 import VerifyPage from "@/pages/auth/verify.tsx";
 import ResumeBuilder from "@/pages/builder/data-form.tsx";
+import CVEditor from "@/pages/builder/cv-builder.tsx";
 
 
 
@@ -30,6 +31,7 @@ function App() {
 
 
                 <Route path="cv" element={<ResumeBuilder/>}/>
+                <Route path="edit" element={<CVEditor/>}/>
             </Route>
         </Routes>
     );
