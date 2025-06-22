@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { useNavigate } from "react-router"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -15,6 +16,7 @@ import Step7Projects from "@/components/pages/builder/step7-projects.tsx";
 import Step8Summary from "@/components/pages/builder/step8-summary.tsx";
 import Step9Layout from "@/components/pages/builder/step9-layout.tsx";
 import Step10Export from "@/components/pages/builder/step10-export.tsx";
+import { mockCVApi } from "@/api/routes/cv/mock.ts";
 
 
 export type workExperienceProps = {
@@ -181,14 +183,17 @@ export default function ResumeBuilder() {
         return Object.keys(newErrors).length === 0
     }
 
-    const handleNext = () => {
+    const navigate = useNavigate()
+
+    const handleNext = async () => {
         if (validateStep(currentStep)) {
             if (!completedSteps.includes(currentStep)) {
                 setCompletedSteps((prev) => [...prev, currentStep])
             }
             if (currentStep === 8) {
-                // Redirect to CV editor after Professional Summary
-                window.location.href = `/cv-editor?data=${encodeURIComponent(JSON.stringify(formData))}`
+                const { editKey } = await mockCVApi.saveData(formData)
+                localStorage.setItem("cv_edit_key", editKey)
+                navigate("/edit")
             } else if (currentStep < steps.length) {
                 setCurrentStep(currentStep + 1)
             }
